@@ -4,6 +4,7 @@ package gunnar.game;
 
 import org.joml.Vector2f;
 
+import gunnar.game.utils.LevelLoader;
 import tek.Window;
 import tek.game.Interface;
 import tek.game.Level;
@@ -82,7 +83,8 @@ public class Game implements Interface
 		UIScene.defaultShader = new Shader("ui", "shaders/ui.vs", "shaders/ui.fs");
 		ui = Scene.current.uiScene;
 		
-		
+		GameObjectsDictionary.init();
+		LevelLoader.LoadLevel("level0");
 	}
 	
 }
