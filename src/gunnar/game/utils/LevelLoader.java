@@ -46,21 +46,21 @@ public class LevelLoader
 		{
 			for (int y = 0; y < height; y++)
 			{
-				int alpha = (((colorMapData[y + x * width]) >> 24) & 0xFF);
-				int red = ((colorMapData[y + x * width]) >> 16) & 0xFF;
-				int green = ((colorMapData[y + x * width]) >> 8) & 0xFF;
-				int blue = ((colorMapData[y + x * width])) & 0xFF;
+				int alpha = map.getA(x, y);;
+				int red = map.getR(x, y);;
+				int green = map.getG(x, y);;
+				int blue = map.getB(x, y);
 				rgb.set(red, green, blue);
 				xy.set(width - x, y);
 				
-//				if (!(red == 0 && green == 0 && blue == 0) && alpha != 0)
-//				{
-//					System.out.println(red);
-//					System.out.println(green);
-//					System.out.println(blue);
-//					System.out.println("------------");
-//				
-//				}
+				if (!(red == 0 && green == 0 && blue == 0) && alpha != 0)
+				{
+					System.out.println(red);
+					System.out.println(green);
+					System.out.println(blue);
+					System.out.println("------------");
+				
+				}
 				loadRules();
 			}
 		}
