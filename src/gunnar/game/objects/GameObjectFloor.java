@@ -2,14 +2,20 @@
 //daApr 21, 2017
 package gunnar.game.objects;
 
+import gunnar.game.utils.GameEntity;
 import tek.render.Texture;
 import tek.render.TextureSheet;
-import tek.runtime.GameObject;
 
-public class GameObjectFloor extends GameObject
+public class GameObjectFloor extends GameEntity
 {
 
 	TextureSheet sheet;
+	
+	public GameObjectFloor()
+	{
+		super();
+
+	}
 	
 	@Override
 	public void Start()

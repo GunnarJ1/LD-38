@@ -8,6 +8,7 @@ import gunnar.game.utils.LevelLoader;
 import tek.Window;
 import tek.game.Interface;
 import tek.game.Level;
+import tek.game.levels.TestLevel;
 import tek.input.Keyboard;
 import tek.render.Shader;
 import tek.runtime.Scene;
@@ -83,7 +84,9 @@ public class Game implements Interface
 		UIScene.defaultShader = new Shader("ui", "shaders/ui.vs", "shaders/ui.fs");
 		ui = Scene.current.uiScene;
 		
-		GameObjectsDictionary.init();
+		loadLevel(new TestLevel());
+		
+		GameEntityDictionary.init();
 		LevelLoader.LoadLevel("level0");
 	}
 	

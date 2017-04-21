@@ -11,7 +11,7 @@ import javax.imageio.ImageIO;
 import org.joml.Vector2i;
 import org.joml.Vector3i;
 
-import gunnar.game.GameObjectsDictionary;
+import gunnar.game.GameEntityDictionary;
 import tek.runtime.GameObject;
 import tek.runtime.Scene;
 
@@ -46,16 +46,12 @@ public class LevelLoader
 			{
 				for (int x = 0; x < width; x++)
 				{
-					int alpha = ((colorMapData[x + y * width]) >> 24) & 0xFF;
 					int red = ((colorMapData[x + y * width]) >> 16) & 0xFF;
 					int green = ((colorMapData[x + y * width]) >> 8) & 0xFF;
 					int blue = ((colorMapData[x + y * width])) & 0xFF;
 					rgb.set(red, green, blue);
 					xy.set(x, y);
 
-					if (red == 255 && green == 255 && blue == 255 && alpha == 255)
-						System.out.println("MEH: " + xy.x + ", " + xy.y );
-						
 					LoadGameObject(255, 0, 0, "wall");
 				}
 			}
@@ -68,26 +64,22 @@ public class LevelLoader
 
 	}
 
+	// Adds a rule type of loading a game object
 	private static void LoadGameObject(int r, int g, int b, String objectName)
 	{
 		GameObject object = null;
 
 		if (rgb.x == r && rgb.y == g && rgb.z == b)
 		{
-			object = GameObjectsDictionary.find(objectName);
+			object = new GameEntity(GameEntityDictionary.find("wall"));
 			object.transform.setPosition(xy.x * 16, xy.y * 16);
-			System.out.println(xy.toString());
+			System.out.println(object.transform.getPosition().x + ", " + object.transform.getPosition().y);
 		}
 
 		// Finds the object
-		try
-		{
-			if (object != null)
-			Scene.current.gameObjects.add(object.getClass().newInstance());
-		} catch (InstantiationException | IllegalAccessException e)
-		{
-			e.printStackTrace();
-		}
+		if (object != null)
+			Scene.current.gameObjects.add(object);
+
 	}
 
 }

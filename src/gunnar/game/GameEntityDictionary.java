@@ -5,12 +5,12 @@ package gunnar.game;
 import java.util.HashMap;
 
 import gunnar.game.objects.GameObjectFloor;
-import tek.runtime.GameObject;
+import gunnar.game.utils.GameEntity;
 
-public class GameObjectsDictionary
+public class GameEntityDictionary
 {
 
-	private static HashMap<String, GameObject> map;
+	private static HashMap<String, GameEntity> map;
 
 	// Initializes the map
 	public static void init()
@@ -21,9 +21,9 @@ public class GameObjectsDictionary
 	}
 
 	// Finds object with in map
-	public static GameObject find(String key)
+	public static GameEntity find(String key)
 	{
-		GameObject obj;
+		GameEntity obj;
 		if ((obj = map.get(key)) == null) {
 			System.err.println("No object find under: " + key);
 		}
@@ -31,7 +31,7 @@ public class GameObjectsDictionary
 	}
 	
 	// Puts object in dictionary
-	public static void put(String key, GameObject object)
+	public static void put(String key, GameEntity object)
 	{
 		map.put(key, object);
 	}
