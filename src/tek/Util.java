@@ -1,9 +1,14 @@
 package tek;
 
+import static org.lwjgl.stb.STBImage.stbi_image_free;
+import static org.lwjgl.stb.STBImage.stbi_info_from_memory;
+import static org.lwjgl.stb.STBImage.stbi_load_from_memory;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Array;
 import java.nio.ByteBuffer;
+import java.nio.IntBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.SeekableByteChannel;
@@ -19,6 +24,7 @@ import java.util.Map.Entry;
 
 import org.joml.Vector2f;
 import org.joml.Vector3f;
+import org.joml.Vector4f;
 import org.lwjgl.BufferUtils;
 
 public class Util {
@@ -26,6 +32,93 @@ public class Util {
 	
 	static{
 		lineSeparator = System.getProperty("line.separator");
+	}
+	
+	public static class TextureBuffer {
+		public final byte[] pixels;
+		public final int width, height;
+		public final String path;
+		public final int comp;
+		
+		public TextureBuffer(String path, byte[] pixels, int width, int height, int comp){
+			this.path = path;
+			this.pixels = pixels;
+			this.width = width;
+			this.height = height;
+			this.comp = comp;
+		}
+		
+		public int getR(int x, int y){
+			if(x > width || y > height || x < 0 || y < 0)
+				return -1;
+			int index = (x + width * y);
+			return (pixels[index]) & 0xFF;
+		}
+		
+		public int getG(int x, int y){
+			if(x > width || y > height || x < 0 || y < 0)
+				return -1;
+			int index = (x + width * y);
+			return (pixels[index + 1]) & 0xFF;
+		}
+		
+		public int getB(int x, int y){
+			if(x > width || y > height || x < 0 || y < 0)
+				return -1;
+			int index = (x + width * y);
+			return (pixels[index + 2]);
+		}
+		
+		public int getA(int x, int y){
+			if(x > width || y > height || x < 0 || y < 0)
+				return -1;
+			int index = (x + width * y);
+			return (pixels[index + 3]) & 0xFF;
+		}
+		
+		public Vector4f getColor(int x, int y){
+			return new Vector4f(
+					getR(x, y),
+					getG(x, y),
+					getB(x, y),
+					getA(x, y));
+		}
+	}
+	
+	public static TextureBuffer getTextureBuffer(String path){
+		IntBuffer w = BufferUtils.createIntBuffer(1);
+		IntBuffer h = BufferUtils.createIntBuffer(1);
+		IntBuffer c = BufferUtils.createIntBuffer(1);
+		
+		ByteBuffer data = ResourceLoader.getBytes(path);
+		
+		if(stbi_info_from_memory(data, w, h, c) != 1)
+			Application.error("Unable to load:" + path);
+		
+		ByteBuffer formatted = stbi_load_from_memory(data, w, h, c, 0);
+		
+		if(formatted == null)
+			Application.error("Unable to format file: " + path);
+		
+		int width = w.get(0);
+		int height = h.get(0);
+		int comp   = c.get(0);
+		
+		System.out.println("CAP");
+		
+		System.out.println(formatted.capacity());
+		
+		byte[] buf = new byte [formatted.remaining()];
+		
+		formatted.get(buf);
+		
+		data.clear();
+		
+		w.clear();
+		h.clear();
+		c.clear();
+		
+		return new TextureBuffer(path, buf, width, height, comp);
 	}
 	
 	public static String toString(Vector3f vec){

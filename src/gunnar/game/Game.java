@@ -10,6 +10,7 @@ import tek.game.Interface;
 import tek.game.Level;
 import tek.game.levels.TestLevel;
 import tek.input.Keyboard;
+import tek.input.Mouse;
 import tek.render.Shader;
 import tek.runtime.GameObject;
 import tek.runtime.Scene;
@@ -62,15 +63,15 @@ public class Game implements Interface
 
 	@Override
 	public void input(long delta) {
-		
+			
 	}
 
 	@Override
 	public void update(long delta) {
-//		Scene.current.camera.position.y -= .3f;
-//		Scene.current.camera.position.x -= .3f;
-//		
-//		Scene.current.camera.updateView();
+		Scene.current.camera.position.y -= .3f;
+		Scene.current.camera.position.x -= .3f;
+		
+		Scene.current.camera.updateView();
 		
 	}
 

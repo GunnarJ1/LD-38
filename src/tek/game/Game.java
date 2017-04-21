@@ -2,12 +2,17 @@ package tek.game;
 
 import org.joml.Vector2f;
 
+import tek.Util;
+import tek.Util.TextureBuffer;
 import tek.Window;
 import tek.audio.Mixer;
 import tek.audio.Music;
+import tek.audio.Sound;
+import tek.audio.Source;
 import tek.game.gameObjects.LevelBound;
 import tek.game.gameObjects.PhysicsDummy;
 import tek.game.levels.TestLevel;
+import tek.game.levels.TestOptions;
 import tek.input.Keyboard;
 import tek.input.Mouse;
 import tek.render.Animation;
@@ -37,6 +42,8 @@ public class Game implements Interface {
 	public UITexture texture;
 	public UIText text;
 	
+	public Source source;
+	public Sound sound;
 	
 	public void loadLevel(Level level){
 		if(this.level != null)
@@ -46,7 +53,7 @@ public class Game implements Interface {
 		level.start();
 	}
 	
-	
+	@Override
 	public void start() {
 		Keyboard.setupButton("horizontal", Keyboard.KEY_RIGHT, Keyboard.KEY_D, Keyboard.KEY_LEFT, Keyboard.KEY_A);
 		
@@ -64,6 +71,11 @@ public class Game implements Interface {
 		Mixer.instance.createChannel("sfx");
 		
 		music = new Music("audio/bg.ogg");
+		
+		sound = new Sound("audio/testsound.ogg");
+		source = new Source(sound);
+		
+		Mixer.instance.addTo(source, "sfx");
 		
 		Mixer.instance.addTo(music, "music");
 		
@@ -93,7 +105,9 @@ public class Game implements Interface {
 		
 		ui.textures.add(texture);
 		ui.texts.add(text);
-
+		
+		TestOptions options = TestOptions.create(ui);
+		
 		gameObject.texture = sheet.texture;
 		gameObject.subTexture = 120;
 		gameObject.transform.setSize(10f, 10f);
@@ -142,46 +156,45 @@ public class Game implements Interface {
 		bounds.transform.setPosition(0f, 0f);
 		bounds.setCollider(new BoxCollider(bounds, new Vector2f(100f, 1f), ColliderType.STATIC));
 		
+		TextureBuffer b = Util.getTextureBuffer("textures/texsheet.png");
+		System.out.println(b.width + " : " + b.height);
 		
 		Scene.current.add(bounds);
 	}
 
-	
+	@Override
 	public void end() {
 		
 	}
 
-	
+	@Override
 	public void input(long delta) {
 		if(Keyboard.isClicked('c')){
-			System.out.println(test.getWidth("Hello World!"));
+			System.out.println(ui.textures.size());
 		
 		}
 		
-		if(Mouse.isClicked(0)){
-			System.out.println(""+Mouse.x + " : " + Mouse.y);
-			Vector2f flipped = ui.flipY(Mouse.x, Mouse.y);
-			System.out.println(flipped.x + " : " + flipped.y);
-		}
+		if(Keyboard.isClicked('i'))
+			source.play();
+		if(Keyboard.isClicked('u'))
+			source.stop();
 		
 		if(Keyboard.isClicked('p'))
-			music.play();
+			if(music.isPlaying())
+				music.pause();
+			else
+				music.play();
 		
 		dummy.collider.applyLinearImpulse(new Vector2f(Keyboard.getButton("horizontal") * 10f, 0f), new Vector2f(0f, 0f));
 	}
 
-
 	@Override
-	public void update(long delta)
-	{
+	public void update(long delta) {
+		
 	}
 
-
 	@Override
-	public void render(long delta)
-	{
+	public void render(long delta) {
 	}
-
-
 
 }
