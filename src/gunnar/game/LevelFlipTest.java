@@ -2,20 +2,23 @@
 //daApr 21, 2017
 package gunnar.game;
 
+import java.awt.Dimension;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.JFrame;
 
 public class LevelFlipTest
 {
 
 	public static void main(String[] args)
 	{
-		
+
 		BufferedImage image = new BufferedImage(128, 128, BufferedImage.TYPE_INT_RGB);
-		
+
 		try
 		{
 			BufferedImage map = ImageIO.read(new File("res/levels/" + "level0" + ".png"));
@@ -32,8 +35,8 @@ public class LevelFlipTest
 					int red = ((colorMapData[y + x]) >> 16) & 0xFF;
 					int green = ((colorMapData[y + x * width]) >> 8) & 0xFF;
 					int blue = ((colorMapData[y + x * width])) & 0xFF;
-//					image.setRGB(x, y, map.getRGB(0, 0, width, height, null, 0, width)[colorMapData y ]);
-					
+					image.setRGB(x, y, map.getRGB(0, 0, width, height, null, 0, width)[y + x * width]);
+
 				}
 			}
 
@@ -42,8 +45,15 @@ public class LevelFlipTest
 
 			e.printStackTrace();
 		}
+
+		JFrame frame = new JFrame("MEr");
+		frame.setPreferredSize(new Dimension(854, 480));
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// frame.pack();
+		frame.setVisible(true);
+//		while (frame.isEnabled())
+//			frame.getGraphics().drawImage(image, 0, 0, null);
+//		System.exit(0);
 	}
 
-	
-	
 }

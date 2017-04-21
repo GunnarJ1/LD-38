@@ -55,7 +55,7 @@ public abstract class GameObject
 
 		this.animations = gameObject.animations;
 		this.currentAnimation = gameObject.currentAnimation;
-
+		
 		Start();
 	}
 

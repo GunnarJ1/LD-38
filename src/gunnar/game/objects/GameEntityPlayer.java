@@ -33,11 +33,8 @@ public class GameEntityPlayer extends GameEntity
 	}
 	
 	@Override
-	public void update(long delta)
+	public void Update(long delta)
 	{
-	
-		
-		super.update(delta);
+		super.Update(delta);
 	}
-	
 }

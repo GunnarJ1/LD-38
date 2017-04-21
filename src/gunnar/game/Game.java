@@ -11,6 +11,7 @@ import tek.game.Level;
 import tek.game.levels.TestLevel;
 import tek.input.Keyboard;
 import tek.render.Shader;
+import tek.runtime.GameObject;
 import tek.runtime.Scene;
 import tek.ui.UIFont;
 import tek.ui.UIScene;
@@ -66,6 +67,10 @@ public class Game implements Interface
 
 	@Override
 	public void update(long delta) {
+//		Scene.current.camera.position.y -= .3f;
+//		Scene.current.camera.position.x -= .3f;
+//		
+//		Scene.current.camera.updateView();
 		
 	}
 
@@ -77,7 +82,6 @@ public class Game implements Interface
 	private void preInit() {
 		Keyboard.setupButton("horizontal", Keyboard.KEY_RIGHT, Keyboard.KEY_D, Keyboard.KEY_LEFT, Keyboard.KEY_A);
 		Window.instance.setClearColor(0, .6f, .8f);
-		Scene.current.camera.size = new Vector2f(Window.defaultWidth /4, Window.defaultHeight /4);
 		// UI elements
 		UIFont font = new UIFont("fonts/test.ttf", 12.0f);
 		UIText.defaultFont = font;
@@ -88,6 +92,7 @@ public class Game implements Interface
 		Shader shader = Shader.get("default");
 		Scene.current.defaultShader = shader;
 		LevelLoader.LoadLevel("level0");
+
 	}
 	
 }

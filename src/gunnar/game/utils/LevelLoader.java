@@ -50,7 +50,7 @@ public class LevelLoader
 					int green = ((colorMapData[y + x * width]) >> 8) & 0xFF;
 					int blue = ((colorMapData[y + x * width])) & 0xFF;
 					rgb.set(red, green, blue);
-					xy.set(x, y);
+					xy.set(width - x, y);
 
 					loadRules();
 				}
@@ -63,17 +63,19 @@ public class LevelLoader
 		}
 	}
 
-	private static void loadRules() {
-		if (rgb.x == 255 && rgb.y == 0 && rgb.z == 0) {
-//			Scene.current.add(new GameObjectWall());
+	private static void loadRules()
+	{
+		if (rgb.x == 255 && rgb.y == 0 && rgb.z == 0)
+		{
+
 		}
-		if (rgb.x == 0 && rgb.y == 255 && rgb.z == 0) {
+	
+		if (rgb.x == 0 && rgb.y == 255 && rgb.z == 0)
+		{
 			GameEntityPlayer player = new GameEntityPlayer();
 			player.transform.setPosition(xy.x * 16, xy.y * 16);
-			Scene.current.add(new GameEntityPlayer());
-			System.out.println(player.transform.getPosition().x + ",\t" + player.transform.getPosition().y);
+			Scene.current.gameObjects.add(player);
 		}
 	}
-	
-	
+
 }
