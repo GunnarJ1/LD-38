@@ -4,30 +4,34 @@ package gunnar.game;
 
 import org.joml.Vector2f;
 
-import tek.audio.Music;
+import tek.Window;
 import tek.game.Interface;
 import tek.game.Level;
 import tek.input.Keyboard;
-import tek.input.Mouse;
 import tek.render.Shader;
 import tek.runtime.Scene;
 import tek.ui.UIFont;
 import tek.ui.UIScene;
 import tek.ui.UIText;
-import tek.ui.UITexture;
 
 public class Game implements Interface
 {
 	
-	Music music;
 	
 	public Level level;
-	
 	public UIFont test;
 	public UIScene ui;
+
 	
-	public UITexture texture;
-	public UIText text;
+	private static Game instance;
+	public static Game GetInstance() {
+		return instance;
+	}
+	
+	public Game()
+	{
+		instance = this;
+	}
 	
 	
 	public void loadLevel(Level level){
@@ -43,7 +47,7 @@ public class Game implements Interface
 		preInit();
 		
 		UIText testing = new UIText("LD Game");
-		
+		testing.set(new Vector2f(10, 10),  new Vector2f(100, 100));
 		Scene.current.uiScene.texts.add(testing);
 		
 	}
@@ -69,9 +73,16 @@ public class Game implements Interface
 
 	
 	private void preInit() {
+		Keyboard.setupButton("horizontal", Keyboard.KEY_RIGHT, Keyboard.KEY_D, Keyboard.KEY_LEFT, Keyboard.KEY_A);
+		Window.instance.setClearColor(0, .6f, .8f);
 		
+		// UI elements
+		UIFont font = new UIFont("fonts/test.ttf", 12.0f);
+		UIText.defaultFont = font;
 		UIScene.defaultShader = new Shader("ui", "shaders/ui.vs", "shaders/ui.fs");
 		ui = Scene.current.uiScene;
+		
+		
 	}
 	
 }
