@@ -50,7 +50,7 @@ public class LevelLoader
 					int green = ((colorMapData[y + x * width]) >> 8) & 0xFF;
 					int blue = ((colorMapData[y + x * width])) & 0xFF;
 					rgb.set(red, green, blue);
-					xy.set(y, x);
+					xy.set(x, y);
 
 					loadRules();
 				}
