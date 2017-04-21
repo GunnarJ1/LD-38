@@ -77,7 +77,7 @@ public class Game implements Interface
 	private void preInit() {
 		Keyboard.setupButton("horizontal", Keyboard.KEY_RIGHT, Keyboard.KEY_D, Keyboard.KEY_LEFT, Keyboard.KEY_A);
 		Window.instance.setClearColor(0, .6f, .8f);
-		
+		Scene.current.camera.size = new Vector2f(Window.defaultWidth /4, Window.defaultHeight /4);
 		// UI elements
 		UIFont font = new UIFont("fonts/test.ttf", 12.0f);
 		UIText.defaultFont = font;
@@ -85,8 +85,8 @@ public class Game implements Interface
 		ui = Scene.current.uiScene;
 		
 		loadLevel(new TestLevel());
-		
-		GameEntityDictionary.init();
+		Shader shader = Shader.get("default");
+		Scene.current.defaultShader = shader;
 		LevelLoader.LoadLevel("level0");
 	}
 	

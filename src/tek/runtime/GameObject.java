@@ -39,6 +39,7 @@ public abstract class GameObject
 
 	public GameObject()
 	{
+		
 		Start();
 	}
 

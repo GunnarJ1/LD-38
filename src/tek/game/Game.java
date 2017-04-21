@@ -23,7 +23,7 @@ import tek.ui.UIScene;
 import tek.ui.UIText;
 import tek.ui.UITexture;
 
-public class Game {
+public class Game implements Interface {
 	
 	Music music;
 	ParticleSystem psystem;
@@ -168,6 +168,18 @@ public class Game {
 			music.play();
 		
 		dummy.collider.applyLinearImpulse(new Vector2f(Keyboard.getButton("horizontal") * 10f, 0f), new Vector2f(0f, 0f));
+	}
+
+
+	@Override
+	public void update(long delta)
+	{
+	}
+
+
+	@Override
+	public void render(long delta)
+	{
 	}
 
 

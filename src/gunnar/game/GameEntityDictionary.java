@@ -4,7 +4,8 @@ package gunnar.game;
 
 import java.util.HashMap;
 
-import gunnar.game.objects.GameObjectFloor;
+import gunnar.game.objects.GameEntityPlayer;
+import gunnar.game.objects.GameObjectWall;
 import gunnar.game.utils.GameEntity;
 
 public class GameEntityDictionary
@@ -17,7 +18,8 @@ public class GameEntityDictionary
 	{
 		map = new HashMap<>();
 
-		map.put("wall", new GameObjectFloor());
+		put("wall", new GameObjectWall());
+		put("player", new GameEntityPlayer());
 	}
 
 	// Finds object with in map

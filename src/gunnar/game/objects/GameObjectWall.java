@@ -6,12 +6,12 @@ import gunnar.game.utils.GameEntity;
 import tek.render.Texture;
 import tek.render.TextureSheet;
 
-public class GameObjectFloor extends GameEntity
+public class GameObjectWall extends GameEntity
 {
 
 	TextureSheet sheet;
-	
-	public GameObjectFloor()
+
+	public GameObjectWall()
 	{
 		super();
 
@@ -22,7 +22,9 @@ public class GameObjectFloor extends GameEntity
 	{
 		sheet = new TextureSheet(new Texture("textures/texsheet.png"), 16, 16, "test");
 		texture = sheet.texture;
-		subTexture = 120;
+		subTexture = 128;
+		tags = new String[1];
+		tags[0] = "wall";	transform.setSize(16f, 16f);
 	}
 
 	@Override
