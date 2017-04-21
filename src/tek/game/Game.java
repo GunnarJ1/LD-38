@@ -23,7 +23,7 @@ import tek.ui.UIScene;
 import tek.ui.UIText;
 import tek.ui.UITexture;
 
-public class Game implements Interface {
+public class Game {
 	
 	Music music;
 	ParticleSystem psystem;
@@ -46,7 +46,7 @@ public class Game implements Interface {
 		level.start();
 	}
 	
-	@Override
+	
 	public void start() {
 		Keyboard.setupButton("horizontal", Keyboard.KEY_RIGHT, Keyboard.KEY_D, Keyboard.KEY_LEFT, Keyboard.KEY_A);
 		
@@ -146,12 +146,12 @@ public class Game implements Interface {
 		Scene.current.add(bounds);
 	}
 
-	@Override
+	
 	public void end() {
 		
 	}
 
-	@Override
+	
 	public void input(long delta) {
 		if(Keyboard.isClicked('c')){
 			System.out.println(test.getWidth("Hello World!"));
@@ -170,13 +170,6 @@ public class Game implements Interface {
 		dummy.collider.applyLinearImpulse(new Vector2f(Keyboard.getButton("horizontal") * 10f, 0f), new Vector2f(0f, 0f));
 	}
 
-	@Override
-	public void update(long delta) {
-		
-	}
 
-	@Override
-	public void render(long delta) {
-	}
 
 }

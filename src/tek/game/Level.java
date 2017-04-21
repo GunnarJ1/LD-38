@@ -1,9 +1,5 @@
 package tek.game;
 
-import java.io.File;
-import java.util.ArrayList;
-
-import tek.ResourceLoader;
 import tek.audio.Music;
 import tek.audio.Sound;
 import tek.render.Shader;
