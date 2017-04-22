@@ -42,7 +42,9 @@ public class LevelLoader
 			temp.transform.setPosition(MathUtils.RandomRange(0, Window.defaultHeight - 32), MathUtils.RandomRange(64, Window.defaultHeight - 128));
 			Scene.current.add(temp);
 		}
+//
 
+		
 		GameObject temp = new GameEntityStar();
 		temp.transform.setPosition(32, 32 - 16);;
 		Scene.current.add(temp);

@@ -2,7 +2,8 @@
 //daApr 21, 2017
 package gunnar.game.objects;
 
-import org.jbox2d.collision.shapes.CircleShape;
+import org.jbox2d.collision.shapes.PolygonShape;
+import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.FixtureDef;
 import org.joml.Vector2f;
 
@@ -12,17 +13,16 @@ import tek.render.Shader;
 import tek.render.TextureSheet;
 import tek.runtime.GameObject;
 import tek.runtime.Physics.CollisionCallback;
-import tek.runtime.physics.BoxCollider;
+import tek.runtime.physics.CircleCollider;
 import tek.runtime.physics.Collider;
 
 public class GameEntityPlayer extends GameEntity {
-	private int jumpSpeed = 10000;
+	private int jumpSpeed = 100 * 9000;
 	private boolean isJumping = true;
 	private int speed = 45;
 
 	
 	// Physics
-	private Vector2f point = new Vector2f(8, 0);
 	private Vector2f impulse;
 	private GameObject inHand;
 
@@ -42,17 +42,13 @@ public class GameEntityPlayer extends GameEntity {
 		shader = Shader.get("default");
 		
 		// Physics
-		setCollider(new BoxCollider(this, transform.getSize()));
-		collider.setGravityScale(2);
-		// Circle Collider
-		CircleShape shape = new CircleShape();
-		shape.m_p.set(0, 0);
-		shape.setRadius(8);
-		
-		FixtureDef fixtureDef = new FixtureDef();
-		fixtureDef.shape = shape;
-
-		collider.body.createFixture(fixtureDef);
+		setCollider(new CircleCollider(this, 8));
+		FixtureDef boxFixture = new FixtureDef();
+		PolygonShape box = new PolygonShape();
+		box.setAsBox(16, 8, new Vec2(8, 10), 0);
+		boxFixture.shape = box;
+		boxFixture.restitution = 0.0f;
+		collider.body.createFixture(boxFixture);
 		
 	}
 
@@ -89,9 +85,7 @@ public class GameEntityPlayer extends GameEntity {
 				
 			}
 		});
-		System.out.println("Impulse: " + impulse.x + ", \t" + impulse.y);
-		collider.applyLinearImpulse(impulse, point);
-
+		collider.setVelocity(impulse.lerp(collider.getVelocity(), .1f));
 		super.Update(delta);
 	}
 

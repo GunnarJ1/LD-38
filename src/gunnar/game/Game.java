@@ -4,15 +4,16 @@ package gunnar.game;
 
 import org.joml.Vector2f;
 
+import gunnar.game.levels.MainLevel;
 import gunnar.game.utils.LevelLoader;
 import tek.Window;
 import tek.game.Interface;
 import tek.game.Level;
-import tek.game.levels.TestLevel;
 import tek.input.Keyboard;
 import tek.render.Shader;
 import tek.render.Texture;
 import tek.render.TextureSheet;
+import tek.runtime.Physics;
 import tek.runtime.Scene;
 import tek.ui.UIFont;
 import tek.ui.UIScene;
@@ -83,6 +84,7 @@ public class Game implements Interface
 
 	
 	private void preInit() {
+		Physics.instance.setGravity(0, -100);
 		Keyboard.setupButton("horizontal", Keyboard.KEY_RIGHT, Keyboard.KEY_D, Keyboard.KEY_LEFT, Keyboard.KEY_A);
 		Window.instance.setClearColor(0, .5f, .6f);
 		Shader shader = Shader.get("default");
@@ -93,12 +95,13 @@ public class Game implements Interface
 		UIScene.defaultShader = new Shader("ui", "shaders/ui.vs", "shaders/ui.fs");
 		ui = Scene.current.uiScene;
 		// Game Content
-		loadLevel(new TestLevel());
+		loadLevel(new MainLevel());
 		Scene.current.defaultShader = shader;
 		
 		new TextureSheet(new Texture("textures/texturesheet.png"), 16, 16, "tiles");
 		LevelLoader.Temp();
 		System.out.println(Scene.current.gameObjects.size());
+		Physics.instance.setGravity(0, -1000);
 	}
 	
 }

@@ -25,8 +25,8 @@ public class GameEntityStar extends GameEntity
 		transform.setSize(size, size);
 		shader = Shader.get("default");
 		addTag("star");
-		setCollider(new BoxCollider(this, transform.getSize()));;
-		collider.setColliderType(ColliderType.KINEMATIC);
+//		setCollider(new BoxCollider(this, transform.getSize()));;
+//		collider.setColliderType(ColliderType.KINEMATIC);
 
 	}
 
