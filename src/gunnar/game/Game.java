@@ -3,7 +3,6 @@
 package gunnar.game;
 
 import org.joml.Vector2f;
-import org.joml.Vector3f;
 
 import gunnar.game.utils.LevelLoader;
 import tek.Window;
@@ -13,6 +12,7 @@ import tek.game.levels.TestLevel;
 import tek.input.Keyboard;
 import tek.render.Shader;
 import tek.render.Texture;
+import tek.render.TextureSheet;
 import tek.runtime.Scene;
 import tek.ui.UIFont;
 import tek.ui.UIScene;
@@ -51,9 +51,11 @@ public class Game implements Interface
 		preInit();
 		
 		UIText testing = new UIText("LD Game");
-		testing.set(new Vector2f(10, 10),  new Vector2f(100, 100));
+		testing.set(new Vector2f(10, (Window.defaultHeight - 10) - 16),  new Vector2f(100, 100));
 		Scene.current.uiScene.texts.add(testing);
-		Scene.current.camera.position = new Vector3f(0, 0, 1);
+		Scene.current.camera.position.y = -3;
+		Scene.current.camera.updateView();
+		
 	}
 
 	@Override
@@ -68,15 +70,13 @@ public class Game implements Interface
 
 	@Override
 	public void update(long delta) {
-//		Scene.current.camera.position.y -= .3f;
-//		Scene.current.camera.position.x -= .3f;
-		
-		Scene.current.camera.updateView();
+
 		
 	}
 
 	@Override
 	public void render(long delta) {
+
 	}
 
 	
@@ -93,8 +93,7 @@ public class Game implements Interface
 		loadLevel(new TestLevel());
 		Scene.current.defaultShader = shader;
 		
-		new Texture("textures/star0.png");
-		new Texture("textures/grass.png");
+		new TextureSheet(new Texture("textures/texturesheet.png"), 16, 16, "tiles");
 		LevelLoader.Temp();
 		System.out.println(Scene.current.gameObjects.size());
 	}

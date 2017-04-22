@@ -9,7 +9,7 @@ public class TestLevel extends Level{
 
 	@Override
 	public void start() {
-		createTexture("textures/texsheet.png");
+		System.out.println("Loaded default shader.");
 		createShader("default", "shaders/default.vs", "shaders/default.fs");
 	}
 

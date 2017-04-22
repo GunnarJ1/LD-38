@@ -2,6 +2,7 @@
 //daApr 21, 2017
 package gunnar.game.utils;
 
+import org.joml.Vector2f;
 import org.joml.Vector2i;
 import org.joml.Vector3i;
 
@@ -20,11 +21,14 @@ public class LevelLoader
 	private static Vector2i xy;
 
 	public static void Temp() {
-		for (int i = 0; i < 10; i++)
+		GameObject player = new GameEntityPlayer();
+		player.transform.setPosition(new Vector2f(16, 14));
+		Scene.current.add(player);
+		for (int i = 0; i < 11; i++)
 		{
 			GameObject temp = new GameEntityGrass();
 			temp.transform.setPosition(i * 16, 0);
-			Scene.current.gameObjects.add(temp);
+			Scene.current.add(temp);
 		}
 	}
 	
@@ -55,14 +59,14 @@ public class LevelLoader
 				int blue = map.getB(x, y);
 				
 				rgb.set(red, green, blue);
-				xy.set(width - x, y);
+				xy.set(x, y);
 				
 				if (!(red == 0 && green == 0 && blue == 0) && alpha != 0)
 				{
-					System.out.println(red);
-					System.out.println(green);
-					System.out.println(blue);
-					System.out.println("------------");
+//					System.out.println(red);
+//					System.out.println(green);
+//					System.out.println(blue);
+//					System.out.println("------------");
 				
 				}
 				loadRules();
@@ -73,21 +77,21 @@ public class LevelLoader
 
 	private static void loadRules()
 	{
-		if (rgb.x == 255 && rgb.y == 0 && rgb.z == 0)
+		if (rgb.x == 255 && rgb.y == 0)
 		{
-			GameObjectWall wall = new GameObjectWall();
+			GameEntityGrass wall = new GameEntityGrass();
 			wall.transform.setPosition(xy.x * 16, xy.y * 16);
 			Scene.current.gameObjects.add(wall);
 			System.out.println(wall.transform.getPosition().x + ", \t" + wall.transform.getPosition().y);
 		}
-
-		if (rgb.x == 0 && rgb.y == 255 && rgb.z == 0)
-		{
-			GameEntityPlayer player = new GameEntityPlayer();
-			player.transform.setPosition(xy.x * 16, xy.y * 16);
-			Scene.current.gameObjects.add(player);
-			System.out.println(player.transform.getPosition().x + ", \t" + player.transform.getPosition().y);
-		}
+//
+//		if (rgb.x == 0 && rgb.y == 255 && rgb.z == 0)
+//		{
+//			GameEntityPlayer player = new GameEntityPlayer();
+//			player.transform.setPosition(xy.x * 16, xy.y * 16);
+//			Scene.current.gameObjects.add(player);
+//			System.out.println(player.transform.getPosition().x + ", \t" + player.transform.getPosition().y);
+//		}
 	}
 
 }
