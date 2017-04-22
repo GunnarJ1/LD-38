@@ -2,25 +2,24 @@
 //daApr 21, 2017
 package gunnar.game.objects;
 
-import java.util.Vector;
-
 import org.joml.Vector2f;
-import org.lwjgl.system.MathUtil;
 
-import com.sun.xml.internal.ws.protocol.soap.VersionMismatchException;
-
+import gunnar.game.MathUtils;
 import gunnar.game.utils.GameEntity;
-import tek.game.MathUtils;
 import tek.input.Keyboard;
 import tek.render.Shader;
 import tek.render.TextureSheet;
+import tek.runtime.Physics.CollisionCallback;
 import tek.runtime.physics.BoxCollider;
+import tek.runtime.physics.Collider;
 
 public class GameEntityPlayer extends GameEntity
 {
-	
-	private int speed = 45;
+
+	public GameEntity hand;
+	private int speed = 70;
 	private float mx, my;
+
 	public GameEntityPlayer()
 	{
 		super();
@@ -33,11 +32,11 @@ public class GameEntityPlayer extends GameEntity
 
 		texture = TextureSheet.getSheet("tiles").texture;
 		subTexture = 2;
-		tags = new String[1];
-		tags[0] = "player";
+		addTag("player");
 		transform.setSize(16f, 16f);
 		shader = Shader.get("default");
-		collider = new BoxCollider(this, transform.getSize());
+		setCollider(new BoxCollider(this, transform.getSize()));
+		
 	}
 
 	@Override
@@ -46,18 +45,53 @@ public class GameEntityPlayer extends GameEntity
 
 		double adjustedDelta = delta / 1000d; // 1s / delta time
 
-		
 		if (Keyboard.isDown('a'))
 		{
-			mx = MathUtils.lerp(mx, -1, .08f);;
+			mx = MathUtils.lerp(mx, -1, .08f);
+			;
 		} else if (Keyboard.isDown('d'))
 		{
-			mx = MathUtils.lerp(mx, 1, .08f);;
-		} else {
+			mx = MathUtils.lerp(mx, 1, .08f);
+			;
+		} else
+		{
 			mx = MathUtils.lerp(mx, 0, .3f);
 		}
 
-		transform.move((float) (mx * speed * adjustedDelta), (float) (my * speed * adjustedDelta));
+		collider.applyForce(new Vector2f(mx));
 		super.Update(delta);
+
+		collider.setCallback(new CollisionCallback() {
+
+			@Override
+			public void onCollisionExit(Collider collider)
+			{
+				if (collider.getParent().hasTag("star"))
+				{
+					setInHand((GameEntity) collider.getParent());
+					System.out.println("Star");
+				}
+			}
+
+			@Override
+			public void onCollisionEnter(Collider collider)
+			{
+			}
+		});
+
+		if (Keyboard.isReleased(Keyboard.KEY_SPACE))
+		{
+			collider.applyForce(new Vector2f(0, 10));
+		}
+
 	}
+
+	public void setInHand(GameEntity obj)
+	{
+		hand = obj;
+		hand.transform.setParent(this);
+		hand.transform.setPosition(0, 0);
+		hand.collider = null;
+	}
+
 }

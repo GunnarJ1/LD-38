@@ -3,7 +3,6 @@
 package gunnar.game.objects;
 
 import gunnar.game.utils.GameEntity;
-import tek.render.Texture;
 import tek.render.TextureSheet;
 
 public class GameObjectWall extends GameEntity
