@@ -20,11 +20,11 @@ public class GameObjectWall extends GameEntity
 	@Override
 	public void Start()
 	{
-		sheet = new TextureSheet(new Texture("textures/texsheet.png"), 16, 16, "test");
-		texture = sheet.texture;
-		subTexture = 128;
-		tags = new String[1];
-		tags[0] = "wall";	transform.setSize(16f, 16f);
+//		sheet = new TextureSheet(new Texture("textures/texsheet.png"), 16, 16, "test");
+//		texture = sheet.texture;
+//		subTexture = 128;
+//		tags = new String[1];
+//		tags[0] = "wall";	transform.setSize(16f, 16f);
 	}
 
 	@Override

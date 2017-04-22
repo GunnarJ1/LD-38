@@ -2,20 +2,15 @@
 //daApr 21, 2017
 package gunnar.game.utils;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
 import org.joml.Vector2i;
 import org.joml.Vector3i;
 
+import gunnar.game.objects.GameEntityGrass;
 import gunnar.game.objects.GameEntityPlayer;
 import gunnar.game.objects.GameObjectWall;
 import tek.Util;
 import tek.Util.TextureBuffer;
-import tek.render.Texture;
+import tek.runtime.GameObject;
 import tek.runtime.Scene;
 
 public class LevelLoader
@@ -24,6 +19,15 @@ public class LevelLoader
 	private static Vector3i rgb;
 	private static Vector2i xy;
 
+	public static void Temp() {
+		for (int i = 0; i < 10; i++)
+		{
+			GameObject temp = new GameEntityGrass();
+			temp.transform.setPosition(i * 16, 0);
+			Scene.current.gameObjects.add(temp);
+		}
+	}
+	
 	public static void LoadLevel(String path)
 	{
 		if (rgb == null)
@@ -40,7 +44,6 @@ public class LevelLoader
 
 		int width = map.width;
 		int height = map.height;
-		byte[] colorMapData = map.pixels;
 		
 		for (int x = 0; x < width; x++)
 		{
@@ -50,6 +53,7 @@ public class LevelLoader
 				int red = map.getR(x, y);;
 				int green = map.getG(x, y);;
 				int blue = map.getB(x, y);
+				
 				rgb.set(red, green, blue);
 				xy.set(width - x, y);
 				

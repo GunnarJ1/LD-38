@@ -1,6 +1,5 @@
 package tek;
 
-import static org.lwjgl.stb.STBImage.stbi_image_free;
 import static org.lwjgl.stb.STBImage.stbi_info_from_memory;
 import static org.lwjgl.stb.STBImage.stbi_load_from_memory;
 

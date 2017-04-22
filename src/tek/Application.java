@@ -109,7 +109,7 @@ public class Application {
 		
 		/* INITIALIZE PROPER GAME ENGINE */
 		
-		new Engine(new Game(), Preferences.getPrefs());
+		new Engine(new gunnar.game.Game(), Preferences.getPrefs());
 		
 		/* SYSTEM EXITING */
 		
