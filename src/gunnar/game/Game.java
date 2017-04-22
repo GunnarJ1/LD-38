@@ -82,8 +82,9 @@ public class Game implements Interface
 	
 	private void preInit() {
 		Keyboard.setupButton("horizontal", Keyboard.KEY_RIGHT, Keyboard.KEY_D, Keyboard.KEY_LEFT, Keyboard.KEY_A);
-		Window.instance.setClearColor(0, .6f, .8f);
+		Window.instance.setClearColor(0, .5f, .6f);
 		Shader shader = Shader.get("default");
+		Window.instance.setIcon("textures/icon16.png", "textures/icon32.png");
 		// UI elements
 		UIFont font = new UIFont("fonts/test.ttf", 12.0f);
 		UIText.defaultFont = font;
