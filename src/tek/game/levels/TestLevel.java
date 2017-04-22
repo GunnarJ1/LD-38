@@ -1,9 +1,6 @@
 package tek.game.levels;
 
 import tek.game.Level;
-import tek.game.gameObjects.PhysicsDummy;
-import tek.runtime.GameObject;
-import tek.runtime.Scene;
 
 public class TestLevel extends Level{
 
@@ -11,7 +8,7 @@ public class TestLevel extends Level{
 	public void start() {
 		System.out.println("Loaded default shader.");
 		createShader("default", "shaders/default.vs", "shaders/default.fs");
-		createShader("wiggle", "shaders/wiggle.vs", "shaders/wiggle.fs");
+
 		
 	}
 

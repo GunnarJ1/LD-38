@@ -5,15 +5,12 @@ package gunnar.game.utils;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
 import org.joml.Vector3i;
-import org.lwjgl.system.MathUtil;
 
 import gunnar.game.MathUtils;
 import gunnar.game.objects.GameEntityClouds;
 import gunnar.game.objects.GameEntityGrass;
 import gunnar.game.objects.GameEntityPlayer;
 import gunnar.game.objects.GameEntityStar;
-import gunnar.game.objects.GameObjectWall;
-import sun.awt.DisplayChangedListener;
 import tek.Util;
 import tek.Util.TextureBuffer;
 import tek.Window;
@@ -25,7 +22,8 @@ public class LevelLoader
 
 	private static Vector3i rgb;
 	private static Vector2i xy;
-
+	
+	// Loads objects to scene
 	public static void Temp()
 	{
 		GameObject player = new GameEntityPlayer();
