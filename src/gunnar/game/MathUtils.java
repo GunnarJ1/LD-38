@@ -4,9 +4,13 @@ package gunnar.game;
 
 import java.util.Random;
 
+import org.joml.Vector2f;
+
 public class MathUtils
 {
 
+	private final static Vector2f zero = new Vector2f();
+	
 	public static float lerp(float a, float b, float interpolation) {
 		return a + interpolation * (b - a);
 	}
@@ -16,6 +20,10 @@ public class MathUtils
 	public static float RandomRange(float min, float max) {
 		float randomNum = (random.nextFloat() * (max - min) + 1) + min;
 		return randomNum;
+	}
+	
+	public static Vector2f Zero2f() {
+		return zero;
 	}
 	
 }

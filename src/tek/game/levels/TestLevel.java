@@ -8,8 +8,6 @@ public class TestLevel extends Level{
 	public void start() {
 		System.out.println("Loaded default shader.");
 		createShader("default", "shaders/default.vs", "shaders/default.fs");
-
-		
 	}
 
 	@Override

@@ -3,6 +3,10 @@ package tek.runtime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.joml.Matrix4f;
+import org.joml.Vector2f;
+
+import tek.game.gameObjects.LargeObject;
 import tek.render.Camera;
 import tek.render.Shader;
 import tek.render.TextureSheet;
@@ -18,8 +22,6 @@ public class Scene {
 	
 	public ArrayList<GameObject> gameObjects;
 	public HashMap<Shader, ArrayList<GameObject>> renderables; 
-	
-	//public UIScene uiScene;
 	
 	public Physics physics;
 	public ArrayList<ParticleSystem> particleSystems;
@@ -140,13 +142,26 @@ public class Scene {
 				shader.set("MODEL_MAT", gameObject.transform.mat);
 				
 				if(gameObject.texture != null){
+					shader.set("FLIP_X", gameObject.flipX);
+					shader.set("FLIP_Y", gameObject.flipY);
+					
+					//shader.set("TEXTURE_REPEAT", gameObject.textureRepeat);
+					
 					if(TextureSheet.isTextureSheet(gameObject.texture)){
 						if(gameObject.subTexture != -1){
 							shader.set("SUB_TEXTURE", true);
 							
 							TextureSheet sheet = TextureSheet.getSheet(gameObject.texture);
 							
-							shader.set("SUB_SIZE", sheet.subSize);
+							if(gameObject instanceof LargeObject){
+								LargeObject l = (LargeObject)gameObject;
+								shader.set("SUB_SIZE", sheet.subSize.mul(new Vector2f(l.tilesX,l.tilesY),
+										new Vector2f()));
+							}else{
+								shader.set("SUB_SIZE", sheet.subSize);
+							}
+							
+						
 							shader.set("TEXTURE_OFFSET", sheet.getOffset(gameObject.subTexture));
 							shader.set("TEXTURE_SIZE", sheet.texture.size);
 						}
@@ -176,17 +191,23 @@ public class Scene {
 		psystem.render();
 		
 		psystem.shader.bind();
-		psystem.shader.set("projection", camera.getProjection());
-		psystem.shader.set("view", camera.getView());
-		psystem.shader.set("model", psystem.transform.mat);
+		psystem.shader.set("PROJECTION_MAT", camera.getProjection());
+		psystem.shader.set("VIEW_MAT", camera.getView());
 		
-		psystem.shader.set("particleZ", psystem.transform.layer * Transform.LAYER_MOD);
+		Matrix4f src = psystem.transform.mat;
+		
+		psystem.texture.bind();
+		psystem.shader.set("SUB_TEXTURE", 1);
+		TextureSheet sheet = TextureSheet.getSheet(psystem.texture);
+		
+		psystem.shader.set("SUB_SIZE", sheet.subSize);
+		psystem.shader.set("TEXTURE_OFFSET", sheet.getOffset(psystem.subTexture));
+		psystem.shader.set("TEXTURE_SIZE", sheet.texture.size);
 		
 		for(Particle particle : psystem.particles){
-			psystem.shader.set("particlePos", particle.position);
-			
-			//TODO Update the color transitions
-			psystem.shader.set("particleColor", psystem.startColor);
+			Matrix4f mat = new Matrix4f(src);
+			mat.translate(particle.position.x, particle.position.y, 0);
+			psystem.shader.set("MODEL_MAT", mat);
 			
 			GameObject.quad.draw();
 		}

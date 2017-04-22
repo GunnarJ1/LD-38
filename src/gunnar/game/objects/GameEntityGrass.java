@@ -2,7 +2,6 @@
 //daApr 21, 2017
 package gunnar.game.objects;
 
-import org.jbox2d.dynamics.BodyType;
 import org.joml.Vector2f;
 
 import gunnar.game.utils.GameEntity;
@@ -20,13 +19,15 @@ public class GameEntityGrass extends GameEntity
 		super.Start();
 		texture = TextureSheet.getSheet("tiles").texture;
 		subTexture = 1;
-		tags = new String[1];
-		tags[0] = "grass";
+		addTag("grass");
+		addTag("ground");
 		transform.setSize(16, 16);
 		shader = Shader.get("default");
-		setCollider(new BoxCollider(this, transform.getSize()));
+		Vector2f boxSize = new Vector2f(transform.getSize());
+		boxSize.y = 11;
+		setCollider(new BoxCollider(this, boxSize));
 		collider.setColliderType(ColliderType.STATIC);
-
+		
 	}
 
 	@Override

@@ -29,7 +29,7 @@ public class LevelLoader
 		GameObject player = new GameEntityPlayer();
 		player.transform.setPosition(new Vector2f(16, 14));
 		Scene.current.add(player);
-		for (int i = 0; i < 30; i++)
+		for (int i = 0; i < 13; i++)
 		{
 			GameObject temp = new GameEntityGrass();
 			temp.transform.setPosition(i * 16, 0);

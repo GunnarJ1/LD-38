@@ -54,7 +54,7 @@ public class Game implements Interface
 		testing.set(new Vector2f(10, (Window.defaultHeight - 10) - 16),  new Vector2f(100, 100));
 		Scene.current.uiScene.texts.add(testing);
 		Scene.current.camera.position.y = -3;
-		Scene.current.camera.size = new Vector2f(Window.defaultWidth / 2, Window.defaultHeight / 2);
+		Scene.current.camera.size = new Vector2f(Window.defaultWidth / 4, Window.defaultHeight / 4);
 		Scene.current.camera.updateView();
 		Scene.current.camera.updateProjection();
 		

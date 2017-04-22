@@ -4,7 +4,7 @@ import org.joml.Matrix4f;
 import org.joml.Vector2f;
 
 public class Transform {
-	public static final float LAYER_MOD = 0.001f;
+	public static final float LAYER_MOD = .01f;
 	
 	private boolean updateNeeded = false;
 	
@@ -70,7 +70,7 @@ public class Transform {
 	
 	public void updateMatrix(){
 		mat.identity();
-		mat.translate(position.x, position.y, layer * LAYER_MOD);
+		mat.translate(position.x, position.y, -layer * LAYER_MOD);
 		mat.rotateZ((float)Math.toRadians(rotation));
 		mat.scale(size.x, size.y, 1f);
 		updateNeeded = false;
@@ -79,6 +79,17 @@ public class Transform {
 	public void setRotation(float deg){
 		rotation = deg;
 		updateNeeded = true;
+	}
+	
+	public void setLayer(int layer){
+		if(this.layer == layer)
+			return;
+		this.layer = layer;
+		updateMatrix();
+	}
+	
+	public int getLayer(){
+		return layer;
 	}
 	
 	public void setSize(Vector2f vec){
