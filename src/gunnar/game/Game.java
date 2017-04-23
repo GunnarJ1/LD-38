@@ -51,8 +51,8 @@ public class Game implements Interface
 	public void start() {
 		preInit();
 		
-		UIText testing = new UIText("LD Game");
-		testing.set(new Vector2f(10, (Window.defaultHeight - 10) - 16),  new Vector2f(100, 100));
+		UIText testing = new UIText("Reaching for the stars");
+		testing.set(new Vector2f(10, (Window.defaultHeight - 10) - 16),  new Vector2f(10, 10));
 		Scene.current.uiScene.texts.add(testing);
 		Scene.current.camera.position.y = -3;
 		Scene.current.camera.size = new Vector2f(Window.defaultWidth / 4, Window.defaultHeight / 4);
@@ -89,19 +89,18 @@ public class Game implements Interface
 		Window.instance.setClearColor(0, .5f, .6f);
 		Shader shader = Shader.get("default");
 		Window.instance.setIcon("textures/icon16.png", "textures/icon32.png");
+		Physics.instance.setGravity(0, -1000);
 		// UI elements
-		UIFont font = new UIFont("fonts/test.ttf", 12.0f);
+		UIFont font = new UIFont("fonts/test.ttf", 8.0f);
 		UIText.defaultFont = font;
 		UIScene.defaultShader = new Shader("ui", "shaders/ui.vs", "shaders/ui.fs");
 		ui = Scene.current.uiScene;
 		// Game Content
 		loadLevel(new MainLevel());
 		Scene.current.defaultShader = shader;
-		
 		new TextureSheet(new Texture("textures/texturesheet.png"), 16, 16, "tiles");
 		LevelLoader.Temp();
-		System.out.println(Scene.current.gameObjects.size());
-		Physics.instance.setGravity(0, -1000);
+//		Animation.get
 	}
 	
 }

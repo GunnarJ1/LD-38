@@ -13,22 +13,19 @@ import org.joml.Vector2f;
 import gunnar.game.MathUtils;
 import gunnar.game.utils.GameEntity;
 import tek.input.Keyboard;
+import tek.render.Animation;
 import tek.render.Shader;
 import tek.render.TextureSheet;
-import tek.runtime.GameObject;
 import tek.runtime.Physics.CollisionCallback;
 import tek.runtime.Scene;
 import tek.runtime.physics.CircleCollider;
 import tek.runtime.physics.Collider;
 
 public class GameEntityPlayer extends GameEntity {
-	private int jumpSpeed = 100 * 9000;
+	private boolean emptyHanded = true;
 	private boolean isJumping = true;
 	private int speed = 45;
 
-	// Physics
-	private Vector2f impulse;
-	private GameObject inHand;
 
 	public GameEntityPlayer() {
 		super();
@@ -37,7 +34,6 @@ public class GameEntityPlayer extends GameEntity {
 
 	@Override
 	public void Start() {
-		inHand = new GameEntity();
 		texture = TextureSheet.getSheet("tiles").texture;
 		subTexture = 2;
 		tags = new String[1];
@@ -45,6 +41,10 @@ public class GameEntityPlayer extends GameEntity {
 		transform.setSize(16f, 16f);
 		shader = Shader.get("default");
 
+		Animation walking = new Animation(TextureSheet.getSheet("tiles"), "walk0", 2, new int[]{1,1,2});
+		addAnimation(walking);
+		setAnimation("walk0");
+		
 		// Physics
 		setCollider(new CircleCollider(this, 8));
 		FixtureDef boxFixture = new FixtureDef();
@@ -55,6 +55,7 @@ public class GameEntityPlayer extends GameEntity {
 		collider.body.createFixture(boxFixture);
 
 	}
+
 
 	@Override
 	public void Update(long delta) {
@@ -70,17 +71,23 @@ public class GameEntityPlayer extends GameEntity {
 		} else {
 			x = 0;
 		}
-
 		collider.setVelocity(new Vector2f(x, y * 100));
+
+		if (Keyboard.isClicked(Keyboard.KEY_SPACE) && !emptyHanded) {
+			GameEntity star = new GameEntityStar(true);
+			star.collider.setVelocity(new Vector2f(0, 10));
+			System.out.println(star.transform.getPosition().x +
+					", \t" + star.transform.getPosition().y);
+			emptyHanded = true;
+		}
+		
 		super.Update(delta);
+
 	}
 
 	// To Set GameEntityStar in "hand" of player
 	public void setInHand() {
-		GameEntityStar star = new GameEntityStar(true);
-
-		star.transform.setParent(this);
-		star.transform.setPosition(new Vector2f(0, 0));
+		emptyHanded = false;
 	}
 
 	// Collision Checking

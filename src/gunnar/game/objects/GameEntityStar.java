@@ -2,9 +2,10 @@
 //daApr 22, 2017
 package gunnar.game.objects;
 
+import javax.xml.ws.Holder;
+
 import org.joml.Vector2f;
 
-import gunnar.game.MathUtils;
 import gunnar.game.utils.GameEntity;
 import tek.render.Shader;
 import tek.render.TextureSheet;
@@ -20,22 +21,22 @@ public class GameEntityStar extends GameEntity {
 	int fallingSpeed = 80;
 	private GameObject instance;
 	private boolean isHoldlable;
+
 	public GameEntityStar(boolean holdable) {
 		super();
 		isHoldlable = holdable;
 		texture = TextureSheet.getSheet("tiles").texture;
 		subTexture = 0;
-		float size = MathUtils.RandomRange(4f, 8f);
+		float size = 8;
 		transform.setSize(size, size);
 		shader = Shader.get("default");
 		addTag("entity");
-		if (!holdable) {
+		if (!holdable)
 			addTag("star");
-			setCollider(new BoxCollider(this, new Vector2f(size, size)));
-			collider.body.m_fixtureList.m_isSensor = true;
-			collider.setColliderType(ColliderType.DYNAMIC);
-			
-		}
+		setCollider(new BoxCollider(this, new Vector2f(size, size)));
+		collider.body.m_fixtureList.m_isSensor = true;
+		collider.setColliderType(ColliderType.DYNAMIC);
+
 		instance = this;
 	}
 
@@ -46,7 +47,7 @@ public class GameEntityStar extends GameEntity {
 
 				@Override
 				public void onCollisionExit(Collider collider) {
-					
+
 				}
 
 				@Override
@@ -67,5 +68,5 @@ public class GameEntityStar extends GameEntity {
 	public boolean isHoldlable() {
 		return isHoldlable;
 	}
-	
+
 }

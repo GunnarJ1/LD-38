@@ -11,6 +11,7 @@ import gunnar.game.objects.GameEntityClouds;
 import gunnar.game.objects.GameEntityGrass;
 import gunnar.game.objects.GameEntityPlayer;
 import gunnar.game.objects.GameEntityStar;
+import gunnar.game.objects.GameEntityStarSpawner;
 import tek.Util;
 import tek.Util.TextureBuffer;
 import tek.Window;
@@ -36,10 +37,10 @@ public class LevelLoader
 			Scene.current.add(temp);
 		}
 
-		for (int i = 0; i < 10; i++)
+		for (int i = 0; i < 4; i++)
 		{
 			GameObject temp = new GameEntityClouds();
-			temp.transform.setPosition(MathUtils.RandomRange(0, Window.defaultHeight - 32), MathUtils.RandomRange(64, Window.defaultHeight - 128));
+			temp.transform.setPosition(MathUtils.RandomRange(16, Window.defaultHeight / 4 - 3), MathUtils.RandomRange(64, Window.defaultHeight / 4));
 			Scene.current.add(temp);
 		}
 //
@@ -49,6 +50,8 @@ public class LevelLoader
 		temp.transform.setPosition(32, 100);;
 		Scene.current.add(temp);
 
+		Scene.current.add(new GameEntityStarSpawner());
+		
 	}
 
 	public static void LoadLevel(String path)
