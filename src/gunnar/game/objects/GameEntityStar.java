@@ -2,6 +2,8 @@
 //daApr 22, 2017
 package gunnar.game.objects;
 
+import org.joml.Vector2f;
+
 import gunnar.game.MathUtils;
 import gunnar.game.utils.GameEntity;
 import tek.render.Shader;
@@ -25,8 +27,9 @@ public class GameEntityStar extends GameEntity
 		transform.setSize(size, size);
 		shader = Shader.get("default");
 		addTag("star");
-//		setCollider(new BoxCollider(this, transform.getSize()));;
-//		collider.setColliderType(ColliderType.KINEMATIC);
+		setCollider(new BoxCollider(this, new Vector2f(8, 8)));
+		collider.body.m_fixtureList.m_isSensor = true;
+		collider.setColliderType(ColliderType.KINEMATIC);
 
 	}
 
