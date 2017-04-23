@@ -45,8 +45,8 @@ public class LevelLoader
 //
 
 		
-		GameObject temp = new GameEntityStar();
-		temp.transform.setPosition(32, 32 - 16);;
+		GameObject temp = new GameEntityStar(false);
+		temp.transform.setPosition(32, 100);;
 		Scene.current.add(temp);
 
 	}

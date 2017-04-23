@@ -60,7 +60,7 @@ public class GameEntityPlayer extends GameEntity {
 	public void Update(long delta) {
 		float x = 0, y = 0;
 		checkCollisionCallbacks();
-		
+
 		if (Keyboard.isDown('a')) {
 			x = -speed;
 			x = MathUtils.lerp(x, speed, .1f);
@@ -71,24 +71,29 @@ public class GameEntityPlayer extends GameEntity {
 			x = 0;
 		}
 
-//		if (Keyboard.isClicked(Keyboard.KEY_SPACE) && isJumping) {
-//			y = jumpSpeed;
-//			isJumping = false;
-//		}
-
 		collider.setVelocity(new Vector2f(x, y * 100));
 		super.Update(delta);
 	}
 
-	public void setInHand(GameEntity obj) {
-		obj.transform.setParent(inHand);
+	// To Set GameEntityStar in "hand" of player
+	public void setInHand() {
+		GameEntityStar star = new GameEntityStar(true);
+
+		star.transform.setParent(this);
+		star.transform.setPosition(new Vector2f(0, 0));
 	}
 
+	// Collision Checking
 	private void checkCollisionCallbacks() {
 		collider.setCallback(new CollisionCallback() {
 
 			@Override
 			public void onCollisionExit(Collider col) {
+
+			}
+
+			@Override
+			public void onCollisionEnter(Collider col) {
 				if (col.getParent().hasTag("ground")) {
 					if (!isJumping) {
 						isJumping = true;
@@ -96,24 +101,23 @@ public class GameEntityPlayer extends GameEntity {
 					}
 				}
 				if (col.getParent().hasTag("star")) {
-					System.out.println("Hit the star");
-					List<String> strings = new ArrayList<String>();
-					strings.toArray(col.getParent().tags);
-					for (String string : strings) {
-						if (string == "star") {
-							strings.remove(string);
-							break;
+					GameEntityStar star = (GameEntityStar) col.getParent();
+					if (star.isHoldlable()) {
+						System.out.println("Hit the star");
+						List<String> strings = new ArrayList<String>();
+						strings.toArray(col.getParent().tags);
+						for (String string : strings) {
+							if (string == "star") {
+								strings.remove(string);
+								break;
+							}
 						}
+						col.getParent().tags = strings.toArray(new String[strings.size()]);
+						Scene.current.remove(col.getParent());
+						setInHand();
+
 					}
-					col.getParent().tags = strings.toArray(new String[strings.size()]);
-					Scene.current.remove(col.getParent());
 				}
-
-			}
-
-			@Override
-			public void onCollisionEnter(Collider collider) {
-
 			}
 		});
 	}

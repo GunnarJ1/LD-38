@@ -8,29 +8,64 @@ import gunnar.game.MathUtils;
 import gunnar.game.utils.GameEntity;
 import tek.render.Shader;
 import tek.render.TextureSheet;
+import tek.runtime.GameObject;
+import tek.runtime.Physics.CollisionCallback;
 import tek.runtime.physics.BoxCollider;
+import tek.runtime.physics.Collider;
 import tek.runtime.physics.Collider.ColliderType;
 
-public class GameEntityStar extends GameEntity
-{
-//	private Vector2f wiggle;
+public class GameEntityStar extends GameEntity {
+	// private Vector2f wiggle;
 
 	int fallingSpeed = 80;
-
-	@Override
-	public void Start()
-	{
-		super.Start();
+	private GameObject instance;
+	private boolean isHoldlable;
+	public GameEntityStar(boolean holdable) {
+		super();
+		isHoldlable = holdable;
 		texture = TextureSheet.getSheet("tiles").texture;
 		subTexture = 0;
 		float size = MathUtils.RandomRange(4f, 8f);
 		transform.setSize(size, size);
 		shader = Shader.get("default");
-		addTag("star");
-		setCollider(new BoxCollider(this, new Vector2f(8, 8)));
-		collider.body.m_fixtureList.m_isSensor = true;
-		collider.setColliderType(ColliderType.KINEMATIC);
-
+		addTag("entity");
+		if (!holdable) {
+			addTag("star");
+			setCollider(new BoxCollider(this, new Vector2f(size, size)));
+			collider.body.m_fixtureList.m_isSensor = true;
+			collider.setColliderType(ColliderType.DYNAMIC);
+			
+		}
+		instance = this;
 	}
 
+	@Override
+	public void Update(long delta) {
+		if (collider.type == ColliderType.DYNAMIC)
+			collider.setCallback(new CollisionCallback() {
+
+				@Override
+				public void onCollisionExit(Collider collider) {
+					
+				}
+
+				@Override
+				public void onCollisionEnter(Collider col) {
+					if (col.getParent().hasTag("ground")) {
+						instance.collider.setColliderType(ColliderType.KINEMATIC);
+						instance.collider.setVelocity(new Vector2f(0, 0));
+						isHoldlable = true;
+					}
+				}
+			});
+		if (isHoldlable) {
+			instance.collider.setVelocity(new Vector2f(0, 0));
+			instance.collider.setGravityScale(0);
+		}
+	}
+
+	public boolean isHoldlable() {
+		return isHoldlable;
+	}
+	
 }
