@@ -75,9 +75,11 @@ public class GameEntityPlayer extends GameEntity {
 
 		if (Keyboard.isClicked(Keyboard.KEY_SPACE) && !emptyHanded) {
 			GameEntity star = new GameEntityStar(true);
-			star.collider.setVelocity(new Vector2f(0, 10));
+			star.transform.setPosition(transform.getPosition());
+			star.collider.setVelocity(new Vector2f(0, 5));
 			System.out.println(star.transform.getPosition().x +
 					", \t" + star.transform.getPosition().y);
+			Scene.current.add(star);
 			emptyHanded = true;
 		}
 		
@@ -109,7 +111,7 @@ public class GameEntityPlayer extends GameEntity {
 				}
 				if (col.getParent().hasTag("star")) {
 					GameEntityStar star = (GameEntityStar) col.getParent();
-					if (star.isHoldlable()) {
+					if (star.isHoldlable() && emptyHanded) {
 						System.out.println("Hit the star");
 						List<String> strings = new ArrayList<String>();
 						strings.toArray(col.getParent().tags);

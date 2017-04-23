@@ -2,8 +2,6 @@
 //daApr 22, 2017
 package gunnar.game.objects;
 
-import javax.xml.ws.Holder;
-
 import org.joml.Vector2f;
 
 import gunnar.game.utils.GameEntity;
@@ -34,9 +32,10 @@ public class GameEntityStar extends GameEntity {
 		if (!holdable)
 			addTag("star");
 		setCollider(new BoxCollider(this, new Vector2f(size, size)));
+
 		collider.body.m_fixtureList.m_isSensor = true;
 		collider.setColliderType(ColliderType.DYNAMIC);
-
+//		collider.setVelocity(new Vector2f(0, 0));
 		instance = this;
 	}
 
@@ -63,6 +62,7 @@ public class GameEntityStar extends GameEntity {
 			instance.collider.setVelocity(new Vector2f(0, 0));
 			instance.collider.setGravityScale(0);
 		}
+		super.Update(delta);
 	}
 
 	public boolean isHoldlable() {

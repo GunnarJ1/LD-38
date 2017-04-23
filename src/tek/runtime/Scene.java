@@ -104,8 +104,11 @@ public class Scene {
 	}
 	
 	public void update(long delta){
-		for(GameObject gameObject : gameObjects){
-			gameObject.update(delta);
+		
+		for (int i = 0; i < gameObjects.size(); i++) {
+			GameObject temp = gameObjects.get(i);			
+			temp.update(delta);
+			temp = null;
 		}
 		
 		for(ParticleSystem system : particleSystems){

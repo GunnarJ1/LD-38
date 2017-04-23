@@ -13,12 +13,11 @@ import tek.runtime.Scene;
 public class GameEntityStarSpawner extends GameEntity {
 
 	private Timer timer;
-	private Scene scene;
+	
 	public GameEntityStarSpawner() {
 		super();
 		timer = new Timer(5);
 		shader = Shader.get("default");
-		scene = Scene.current;
 	}
 	
 	@Override
@@ -26,12 +25,13 @@ public class GameEntityStarSpawner extends GameEntity {
 		timer.update(delta);
 		if (timer.isFinished()) {
 			GameObject star = new GameEntityStar(false);
-			float x = MathUtils.RandomRange(0, Window.defaultWidth / 4);
-			float y = MathUtils.RandomRange(100, (Window.defaultHeight / 4) -32);
+			final float x = MathUtils.RandomRange(0, Window.defaultWidth / 4);
+			final float y = Window.defaultHeight;
 			star.transform.setPosition(new Vector2f(x, y));
 			Scene.current.add(star);
 			timer.resetTimer();
 		}
+		super.Update(delta);
 	}
 	
 }
